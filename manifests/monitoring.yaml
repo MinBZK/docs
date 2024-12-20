@@ -1,0 +1,28 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: backend-service-monitor
+  labels:
+    app: docs-minio-monitoring
+spec:
+  selector:
+    matchLabels:
+      app: minio
+  endpoints:
+  - port: "9000"
+    path: /minio/metrics/v3
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: backend-pod-monitor
+  labels:
+    app: docs-minio-monitoring
+spec:
+  selector:
+    matchLabels:
+      app: minio
+  podMetricsEndpoints:
+  - port: "9000"
+    path: /minio/metrics/v3
+    scheme: http

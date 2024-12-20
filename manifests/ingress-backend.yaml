@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ing-backend
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  rules:
+    - host: "docs.la-suite.apps.digilab.network"
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-frontend
+                port:
+                  number: 8080
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-backend
+                port:
+                  number: 8000
+  tls:
+    - hosts:
+        - docs.la-suite.apps.digilab.network
+      secretName: docs-tls

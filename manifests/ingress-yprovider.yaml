@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ing-yprovider
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/auth-response-headers: Authorization, X-Can-Edit, X-User-Id
+    nginx.ingress.kubernetes.io/auth-url: https://docs.la-suite.apps.digilab.network/api/v1.0/documents/collaboration-auth/
+    nginx.ingress.kubernetes.io/enable-websocket: "true"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "86400"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "86400"
+    nginx.ingress.kubernetes.io/upstream-hash-by: $arg_room
+spec:
+  rules:
+    - host: "docs.la-suite.apps.digilab.network"
+      http:
+        paths:
+          - path: "/collaboration/ws/"
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: svc-yprovider
+                port:
+                  number: 4444
+  tls:
+    - hosts:
+        - docs.la-suite.apps.digilab.network
+      secretName: docs-tls

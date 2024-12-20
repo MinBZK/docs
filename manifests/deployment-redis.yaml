@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dpl-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - name: redis
+        image: redis:7.4.1
+        ports:
+        - containerPort: 6379
+        resources:
+          requests:
+            cpu: 300m
+            memory:  1Gi
+            ephemeral-storage: "2Gi"
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+      volumes:
+      - name: redis-data
+        emptyDir: {}

@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ing-yprovider-api
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/upstream-hash-by: $arg_room
+spec:
+  rules:
+    - host: "docs.la-suite.apps.digilab.network"
+      http:
+        paths:
+          - path: "/collaboration/api/"
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: svs-yprovider
+                port:
+                  number: 4444
+  tls:
+    - hosts:
+        - docs.la-suite.apps.digilab.network
+      secretName: docs-tls

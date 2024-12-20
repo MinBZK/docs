@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: tn-openbsw-docs
+namePrefix: docs-
+
+buildMetadata: [originAnnotations]
+
+resources:
+  - manifests/deployment-backend.yaml
+  - manifests/deployment-frontend.yaml
+  - manifests/deployment-minio.yaml
+  - manifests/deployment-redis.yaml
+  - manifests/deployment-yprovider.yaml
+  - manifests/ingress-backend-admin.yaml
+  - manifests/ingress-backend.yaml
+  - manifests/ingress-minio.yaml
+  - manifests/ingress-yprovider-api.yaml
+  - manifests/ingress-yprovider.yaml
+  - manifests/postgresql-cluster.yaml
+  - manifests/pvc-minio.yaml
+  - manifests/pvc.yaml
+  - manifests/secret-docs.yaml
+  - manifests/secret-minio.yaml
+  - manifests/secret-postgres-super.yaml
+  - manifests/secret-postgres.yaml
+  - manifests/service-backend.yaml
+  - manifests/service-frontend.yaml
+  - manifests/service-minio.yaml
+  - manifests/service-redis.yaml
+  - manifests/service-yprovider.yaml
+  - manifests/monitoring.yaml

@@ -1,0 +1,32 @@
+publiccodeYmlVersion: "0.2"
+categories:
+  - it-development
+description:
+  en:
+    features:
+      - Open Source
+      - Government
+    genericName: docs
+    longDescription: |
+      Docs deployment
+
+    shortDescription: Docs deployment
+developmentStatus: concept
+legal:
+  license: EUPL-1.2
+localisation:
+  availableLanguages:
+    - en
+    - nl
+  localisationReady: false
+maintenance:
+  contacts:
+    - name: Mijn Bureau
+      email: opensource@minbzk.nl
+  type: community
+name: grist
+platforms:
+  - docs
+releaseDate: "2024-12-18"
+softwareType: standalone/web
+url: "https://github.com/MinBZK/docs"

@@ -1,0 +1,181 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dpl-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docs
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: docs
+        component: backend
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - name: docs
+        image: lasuite/impress-backend:v1.10.0
+        command:
+          - gunicorn
+          - -c
+          - /usr/local/etc/gunicorn/impress.py
+          - impress.wsgi:application
+          - --reload
+        env:            
+            - name: "AWS_S3_ACCESS_KEY_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: sec-minio
+                  key: minio_root_user
+            - name: "AWS_S3_ENDPOINT_URL"
+              value: "http://docs-svc-minio:9000"
+            - name: "AWS_S3_SECRET_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: sec-minio
+                  key: minio_root_password
+            - name: "AWS_STORAGE_BUCKET_NAME"
+              value: "impress-media-storage"
+            - name: "COLLABORATION_API_URL"
+              value: "https://docs.la-suite.apps.digilab.network/collaboration/api/"
+            - name: "COLLABORATION_SERVER_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: sec-docs
+                  key: server_secret
+            - name: "DB_HOST"
+              value: "docs-cluster-db-rw"
+            - name: "DB_NAME"
+              value: "impress"
+            - name: "DB_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: sec-postgres
+                  key: password
+            - name: "DB_PORT"
+              value: "5432"
+            - name: "DB_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: sec-postgres
+                  key: username
+            - name: "DJANGO_ALLOWED_HOSTS"
+              value: "docs.la-suite.apps.digilab.network"
+            - name: "DJANGO_CONFIGURATION"
+              value: "Feature"
+            - name: "DJANGO_CSRF_TRUSTED_ORIGINS"
+              value: "https://docs.la-suite.apps.digilab.network"
+            - name: "DJANGO_EMAIL_BRAND_NAME"
+              value: "La Suite Mijn bureau"
+            - name: "DJANGO_EMAIL_HOST"
+              value: "mailcatcher"
+            - name: "DJANGO_EMAIL_LOGO_IMG"
+              value: "https://docs.la-suite.apps.digilab.network/assets/logo-suite-numerique.png"
+            - name: "DJANGO_EMAIL_PORT"
+              value: "1025"
+            - name: "DJANGO_EMAIL_USE_SSL"
+              value: "false"
+            - name: "DJANGO_SECRET_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: sec-docs
+                  key: django_secret
+            - name: "DJANGO_SERVER_TO_SERVER_API_TOKENS"
+              valueFrom:
+                secretKeyRef:
+                  name: sec-docs
+                  key: server_api_token
+            - name: "DJANGO_SETTINGS_MODULE"
+              value: "impress.settings"
+            - name: "DJANGO_SUPERUSER_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: sec-docs
+                  key: superuser_password
+            - name: "LOGGING_LEVEL_HANDLERS_CONSOLE"
+              value: "ERROR"
+            - name: "LOGGING_LEVEL_LOGGERS_APP"
+              value: "INFO"
+            - name: "LOGGING_LEVEL_LOGGERS_ROOT"
+              value: "INFO"
+            - name: "LOGIN_REDIRECT_URL"
+              value: "https://docs.la-suite.apps.digilab.network"
+            - name: "LOGIN_REDIRECT_URL_FAILURE"
+              value: "https://docs.la-suite.apps.digilab.network"
+            - name: "LOGOUT_REDIRECT_URL"
+              value: "https://docs.la-suite.apps.digilab.network"
+            # - name: "OIDC_AUTH_REQUEST_EXTRA_PARAMS"
+            #   value: "{'acr_values': 'eidas1'}"
+            - name: "OIDC_OP_AUTHORIZATION_ENDPOINT"
+              value: "https://id.la-suite.apps.digilab.network/realms/lasuite/protocol/openid-connect/auth"
+            - name: "OIDC_OP_JWKS_ENDPOINT"
+              value: "https://id.la-suite.apps.digilab.network/realms/lasuite/protocol/openid-connect/certs"
+            - name: "OIDC_OP_LOGOUT_ENDPOINT"
+              value: "https://id.la-suite.apps.digilab.network/realms/lasuite/protocol/openid-connect/logout"
+            - name: "OIDC_OP_TOKEN_ENDPOINT"
+              value: "https://id.la-suite.apps.digilab.network/realms/lasuite/protocol/openid-connect/token"
+            - name: "OIDC_OP_USER_ENDPOINT"
+              value: "https://id.la-suite.apps.digilab.network/realms/lasuite/protocol/openid-connect/userinfo"
+            - name: "OIDC_REDIRECT_ALLOWED_HOSTS"
+              value: "https://docs.la-suite.apps.digilab.network"
+            - name: "OIDC_RP_CLIENT_ID"
+              value: "docs"
+            - name: "OIDC_RP_CLIENT_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: sec-docs
+                  key: oidc_secret
+            - name: "OIDC_RP_SCOPES"
+              value: "openid email profile"
+            - name: "OIDC_RP_SIGN_ALGO"
+              value: "RS256"
+            - name: "POSTGRES_DB"
+              value: "impress"
+            - name: "POSTGRES_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: sec-postgres
+                  key: password
+            - name: "POSTGRES_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: sec-postgres
+                  key: username
+            - name: "REDIS_URL"
+              value: "redis://docs-svc-redis:6379/1"
+            - name: "STORAGES_STATICFILES_BACKEND"
+              value: "django.contrib.staticfiles.storage.StaticFilesStorage"
+            - name: "USER_OIDC_FIELDS_TO_FULLNAME"
+              value: "given_name,usual_name"
+            - name: "USER_OIDC_FIELD_TO_SHORTNAME"
+              value: "given_name"
+            - name: "Y_PROVIDER_API_BASE_URL"
+              value: "http://docs-svc-yprovider:4444/api/"
+            - name: "Y_PROVIDER_API_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: sec-docs
+                  key: y_provider_api_key
+        ports:
+          - name: http
+            containerPort: 8000
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /__heartbeat__
+            port: 8000
+          initialDelaySeconds: 10
+          timeoutSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /__lbheartbeat__
+            port: 8000
+          initialDelaySeconds: 10
+        resources:
+          requests:
+            cpu: 300m
+            memory:  4Gi
+            ephemeral-storage: "2Gi"
