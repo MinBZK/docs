@@ -30,3 +30,4 @@ resources:
   - manifests/service-redis.yaml
   - manifests/service-yprovider.yaml
   - manifests/monitoring.yaml
+  - manifests/secret-ai.yaml

@@ -148,8 +148,6 @@ spec:
               value: "redis://docs-svc-redis:6379/1"
             - name: "STORAGES_STATICFILES_BACKEND"
               value: "django.contrib.staticfiles.storage.StaticFilesStorage"
-            - name: "USER_OIDC_FIELDS_TO_FULLNAME"
-              value: "given_name,usual_name"
             - name: "USER_OIDC_FIELD_TO_SHORTNAME"
               value: "given_name"
             - name: "Y_PROVIDER_API_BASE_URL"
@@ -159,6 +157,21 @@ spec:
                 secretKeyRef:
                   name: sec-docs
                   key: y_provider_api_key
+            - name: AI_BASE_URL
+              value: "https://api.openai.com/v1/"
+            - name: AI_MODEL
+              value: "gpt-4o-mini"
+            - name: AI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sec-ai
+                  key: api_key  
+            - name: USER_OIDC_FIELDS_TO_FULLNAME
+              value: "name"   
+            - name: DJANGO_DEBUG
+              value: "True"
+            - name: DJANGO_USE_SWAGGER
+              value: "True"
         ports:
           - name: http
             containerPort: 8000
