@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dpl-mailcatcher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailcatcher
+  template:
+    metadata:
+      labels:
+        app: mailcatcher
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: mailcatcher
+          image: sj26/mailcatcher:v0.10.0
+          ports:
+            - name: http
+              containerPort: 1080
+            - name: smtp
+              containerPort: 1025

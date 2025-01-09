@@ -18,6 +18,8 @@ spec:
       containers:
       - name: docs
         image: lasuite/impress-backend:v1.10.0
+        securityContext:
+          runAsUser: 0
         command:
           - gunicorn
           - -c
@@ -71,13 +73,17 @@ spec:
             - name: "DJANGO_EMAIL_BRAND_NAME"
               value: "La Suite Mijn bureau"
             - name: "DJANGO_EMAIL_HOST"
-              value: "mailcatcher"
+              value: "docs-svc-mailcatcher"
             - name: "DJANGO_EMAIL_LOGO_IMG"
               value: "https://docs.la-suite.apps.digilab.network/assets/logo-suite-numerique.png"
             - name: "DJANGO_EMAIL_PORT"
               value: "1025"
             - name: "DJANGO_EMAIL_USE_SSL"
               value: "false"
+            - name: "DJANGO_EMAIL_FROM"
+              value: "berry.hartog@rijksoverheid.nl"
+            - name: "DJANGO_EMAIL_TIMEOUT"
+              value: "2"
             - name: "DJANGO_SECRET_KEY"
               valueFrom:
                 secretKeyRef:
@@ -90,6 +96,8 @@ spec:
                   key: server_api_token
             - name: "DJANGO_SETTINGS_MODULE"
               value: "impress.settings"
+            - name: "DJANGO_SITE_ID"
+              value: "2"
             - name: "DJANGO_SUPERUSER_PASSWORD"
               valueFrom:
                 secretKeyRef:

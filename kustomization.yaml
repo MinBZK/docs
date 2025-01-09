@@ -31,3 +31,5 @@ resources:
   - manifests/service-yprovider.yaml
   - manifests/monitoring.yaml
   - manifests/secret-ai.yaml
+  - manifests/deployment-mailcatcher.yaml
+  - manifests/service-mailcatcher.yaml
