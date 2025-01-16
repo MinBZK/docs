@@ -166,9 +166,9 @@ spec:
                   name: sec-docs
                   key: y_provider_api_key
             - name: AI_BASE_URL
-              value: "http://ai-ollama.tn-openbsw-ai.svc.cluster.local:11434/v1/"
+              value: "https://api.openai.com/v1/"
             - name: AI_MODEL
-              value: "llama3.2"
+              value: "gpt-4o-mini"
             - name: AI_API_KEY
               valueFrom:
                 secretKeyRef:
