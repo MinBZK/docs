@@ -16,31 +16,31 @@ spec:
     spec:
       automountServiceAccountToken: false
       containers:
-      - name: minio
-        image: minio/minio:RELEASE.2024-11-07T00-52-20Z
-        command: ["minio", "server", "/data", "--console-address", ":9001"]
-        ports:
-        - containerPort: 9000
-        - containerPort: 9001
-        env:
-        - name: MINIO_PROMETHEUS_AUTH_TYPE
-          value: "public"
-        - name: MINIO_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: sec-minio
-              key: minio_root_password
-        - name: MINIO_ROOT_USER
-          valueFrom:
-            secretKeyRef:
-              name: sec-minio
-              key: minio_root_user
-        - name: MINIO_BROWSER_LOGIN_ANIMATION
-          value: "off"
-        volumeMounts:
-        - name: minio-pv-storage
-          mountPath: /data
+          - name: minio
+            image: minio/minio:RELEASE.2024-11-07T00-52-20Z
+            command: ["minio", "server", "/data", "--console-address", ":9001"]
+            ports:
+              - containerPort: 9000
+              - containerPort: 9001
+            env:
+              - name: MINIO_PROMETHEUS_AUTH_TYPE
+                value: "public"
+              - name: MINIO_ROOT_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: sec-minio
+                    key: minio_root_password
+              - name: MINIO_ROOT_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: sec-minio
+                    key: minio_root_user
+              - name: MINIO_BROWSER_LOGIN_ANIMATION
+                value: "off"
+            volumeMounts:
+              - name: minio-pv-storage
+                mountPath: /data
       volumes:
-      - name: minio-pv-storage
-        persistentVolumeClaim:
-          claimName: pvc-minio
+        - name: minio-pv-storage
+          persistentVolumeClaim:
+            claimName: pvc-minio

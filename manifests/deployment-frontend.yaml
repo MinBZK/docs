@@ -16,20 +16,19 @@ spec:
     spec:
       automountServiceAccountToken: false
       containers:
-      - name: docs
-        image: lasuite/impress-frontend:v1.10.0
-        env:            
-          - name: "NEXT_PUBLIC_API_ORIGIN"
-            value: "https://docs.la-suite.apps.digilab.network"
-          - name: "PORT"
-            value: "8080"
-        ports:
-          - name: http
-            containerPort: 8080
-            protocol: TCP
-        resources:
-          requests:
-            cpu: 100m
-            memory:  1Gi
-            ephemeral-storage: "2Gi"
-
+        - name: docs
+          image: lasuite/impress-frontend:v1.10.0
+          env:
+            - name: "NEXT_PUBLIC_API_ORIGIN"
+              value: "https://docs.la-suite.apps.digilab.network"
+            - name: "PORT"
+              value: "8080"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 1Gi
+              ephemeral-storage: "2Gi"

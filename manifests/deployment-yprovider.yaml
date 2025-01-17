@@ -16,32 +16,32 @@ spec:
     spec:
       automountServiceAccountToken: false
       containers:
-      - name: docs
-        image: lasuite/impress-y-provider:v1.10.0
-        env:            
-          - name: "COLLABORATION_LOGGING"
-            value: "true"
-          - name: "COLLABORATION_SERVER_ORIGIN"
-            value: "https://docs.la-suite.apps.digilab.network"
-          - name: "COLLABORATION_SERVER_SECRET"
-            valueFrom:
+        - name: docs
+          image: lasuite/impress-y-provider:v1.10.0
+          env:
+            - name: "COLLABORATION_LOGGING"
+              value: "true"
+            - name: "COLLABORATION_SERVER_ORIGIN"
+              value: "https://docs.la-suite.apps.digilab.network"
+            - name: "COLLABORATION_SERVER_SECRET"
+              valueFrom:
                 secretKeyRef:
                   name: sec-docs
                   key: server_secret
-          - name: "Y_PROVIDER_API_KEY"
-            value: "my-secret"
-        ports:
-          - name: http
-            containerPort: 4444
-            protocol: TCP
-        livenessProbe:
-          httpGet:
-            path: /ping
-            port: 4444
-          initialDelaySeconds: 10
-          timeoutSeconds: 1
-        resources:
-          requests:
-            cpu: 500m
-            memory:  4Gi
-            ephemeral-storage: "2Gi"
+            - name: "Y_PROVIDER_API_KEY"
+              value: "my-secret"
+          ports:
+            - name: http
+              containerPort: 4444
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 4444
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 500m
+              memory: 4Gi
+              ephemeral-storage: "2Gi"

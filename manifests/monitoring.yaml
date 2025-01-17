@@ -9,8 +9,8 @@ spec:
     matchLabels:
       app: minio
   endpoints:
-  - port: "9000"
-    path: /minio/metrics/v3
+    - port: "9000"
+      path: /minio/metrics/v3
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
@@ -23,6 +23,6 @@ spec:
     matchLabels:
       app: minio
   podMetricsEndpoints:
-  - port: "9000"
-    path: /minio/metrics/v3
-    scheme: http
+    - port: "9000"
+      path: /minio/metrics/v3
+      scheme: http

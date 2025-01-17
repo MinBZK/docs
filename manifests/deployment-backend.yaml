@@ -16,17 +16,17 @@ spec:
     spec:
       automountServiceAccountToken: false
       containers:
-      - name: docs
-        image: lasuite/impress-backend:v1.10.0
-        securityContext:
-          runAsUser: 0
-        command:
-          - gunicorn
-          - -c
-          - /usr/local/etc/gunicorn/impress.py
-          - impress.wsgi:application
-          - --reload
-        env:            
+        - name: docs
+          image: lasuite/impress-backend:v1.10.0
+          securityContext:
+            runAsUser: 0
+          command:
+            - gunicorn
+            - -c
+            - /usr/local/etc/gunicorn/impress.py
+            - impress.wsgi:application
+            - --reload
+          env:
             - name: "AWS_S3_ACCESS_KEY_ID"
               valueFrom:
                 secretKeyRef:
@@ -173,30 +173,30 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: sec-ai
-                  key: api_key  
+                  key: api_key
             - name: USER_OIDC_FIELDS_TO_FULLNAME
-              value: "name"   
+              value: "name"
             - name: DJANGO_DEBUG
               value: "True"
             - name: DJANGO_USE_SWAGGER
               value: "True"
-        ports:
-          - name: http
-            containerPort: 8000
-            protocol: TCP
-        livenessProbe:
-          httpGet:
-            path: /__heartbeat__
-            port: 8000
-          initialDelaySeconds: 10
-          timeoutSeconds: 1
-        readinessProbe:
-          httpGet:
-            path: /__lbheartbeat__
-            port: 8000
-          initialDelaySeconds: 10
-        resources:
-          requests:
-            cpu: 300m
-            memory:  4Gi
-            ephemeral-storage: "2Gi"
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /__heartbeat__
+              port: 8000
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /__lbheartbeat__
+              port: 8000
+            initialDelaySeconds: 10
+          resources:
+            requests:
+              cpu: 300m
+              memory: 4Gi
+              ephemeral-storage: "2Gi"
