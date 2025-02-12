@@ -17,7 +17,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: docs
-          image: lasuite/impress-y-provider:v2.1.0
+          image: lasuite/impress-y-provider:v2.2.0
           env:
             - name: "COLLABORATION_LOGGING"
               value: "true"
