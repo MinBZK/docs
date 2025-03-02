@@ -29,6 +29,6 @@ spec:
               protocol: TCP
           resources:
             requests:
-              cpu: 100m
-              memory: 1Gi
+              cpu: 10m
+              memory: 32Mi
               ephemeral-storage: "2Gi"

@@ -40,6 +40,10 @@ spec:
           volumeMounts:
             - name: minio-pv-storage
               mountPath: /data
+          resources:
+            requests:
+              cpu: 10m
+              memory: 512Mi
       volumes:
         - name: minio-pv-storage
           persistentVolumeClaim:

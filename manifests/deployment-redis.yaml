@@ -20,8 +20,8 @@ spec:
             - containerPort: 6379
           resources:
             requests:
-              cpu: 300m
-              memory: 1Gi
+              cpu: 10m
+              memory: 16Mi
               ephemeral-storage: "2Gi"
           volumeMounts:
             - name: redis-data

@@ -197,6 +197,6 @@ spec:
             initialDelaySeconds: 10
           resources:
             requests:
-              cpu: 300m
-              memory: 4Gi
+              cpu: 60m
+              memory: 512Mi
               ephemeral-storage: "2Gi"
