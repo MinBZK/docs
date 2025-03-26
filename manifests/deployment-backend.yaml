@@ -166,9 +166,9 @@ spec:
                   name: sec-docs
                   key: y_provider_api_key
             - name: AI_BASE_URL
-              value: "https://api.openai.com/v1/"
+              value: "https://api.ssc-ict-trial.ubiops.io/v2.1/projects/external-poc/openai-compatible/v1"
             - name: AI_MODEL
-              value: "gpt-4o-mini"
+              value: "ubiops-deployment/bzk-openbsw-chat//llama-3.3-70b-instruct-awq"
             - name: AI_API_KEY
               valueFrom:
                 secretKeyRef:
