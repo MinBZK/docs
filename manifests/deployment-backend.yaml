@@ -166,9 +166,9 @@ spec:
                   name: sec-docs
                   key: y_provider_api_key
             - name: AI_BASE_URL
-              value: "https://api.ssc-ict-trial.ubiops.io/v2.1/projects/external-poc/openai-compatible/v1"
+              value: "https://api.demo.vlam.ai/v2.1/projects/poc/openai-compatible/v1"
             - name: AI_MODEL
-              value: "ubiops-deployment/bzk-openbsw-chat//llama-3.3-70b-instruct-awq"
+              value: "ubiops-deployment/bzk-openbsw-chat//chat-model"
             - name: AI_API_KEY
               valueFrom:
                 secretKeyRef:
